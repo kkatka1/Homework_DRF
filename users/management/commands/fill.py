@@ -1,6 +1,9 @@
-from django.core.management.base import BaseCommand
-from users.models import Payment, User
 from datetime import date
+
+from django.core.management.base import BaseCommand
+
+from users.models import Payment, User
+
 
 class Command(BaseCommand):
 
@@ -8,12 +11,18 @@ class Command(BaseCommand):
 
         params = dict(email="test@example.com", password="qwerty")
 
-        user, user_status = User.objects.get_or_create(email=params['email'], defaults=params)
+        user, user_status = User.objects.get_or_create(
+            email=params["email"], defaults=params
+        )
 
         if not user_status:  # если пользователь уже был найден
-            self.stdout.write(self.style.SUCCESS(f"Пользователь с email {user.email} уже существует."))
+            self.stdout.write(
+                self.style.SUCCESS(f"Пользователь с email {user.email} уже существует.")
+            )
         else:
-            self.stdout.write(self.style.SUCCESS(f"Пользователь с email {user.email} был создан."))
+            self.stdout.write(
+                self.style.SUCCESS(f"Пользователь с email {user.email} был создан.")
+            )
 
         user.is_staff = True
         user.is_superuser = True
@@ -29,7 +38,10 @@ class Command(BaseCommand):
             payment_method="cash",
         )
         self.stdout.write(
-            self.style.SUCCESS(f"Платеж на сумму {payment_1.amount} создан для пользователя {user.email}"))
+            self.style.SUCCESS(
+                f"Платеж на сумму {payment_1.amount} создан для пользователя {user.email}"
+            )
+        )
 
         payment_2 = Payment.objects.create(
             user=user,
