@@ -10,7 +10,7 @@ class IsModer(permissions.BasePermission):
 
 
 
-#class IsOwner(permissions.BasePermission):
-#    """Проверка, что пользователь является владельцем объекта"""
-#    def has_object_permission(self, request, view, obj):
-#        return obj.owner == request.user
+class IsOwner(permissions.BasePermission):
+    """Проверка, что пользователь является владельцем объекта"""
+    def has_object_permission(self, request, view, obj):
+        return obj.owner == request.user
