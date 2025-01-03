@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework_simplejwt",
     "rest_framework",
+    "drf_yasg",
     "users",
     "materials",
     "django_filters",
@@ -120,3 +121,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+
+STRIPE_TEST_SECRET_KEY = "sk_test_51QdGvDDi3vcO8Kl5g1DwT0pQSvvYAT7CZDtQ3Brg94h9Wdb2NuHHpj2Cv5ytD6MFdpiz03bV3cY8gStCyfDif8yM00KyR56kav"
+STRIPE_TEST_PUBLISHABLE_KEY = "pk_test_51QdGvDDi3vcO8Kl51sAXHDHhutpdHJZlti0HTVM3BRwRyzCpKizNa9VTrjMpOuWJX3iSGAgoAPQcQdgwd1KJkLHU00RdIlWx1R"
