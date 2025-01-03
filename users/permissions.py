@@ -8,8 +8,8 @@ class IsModer(permissions.BasePermission):
         return request.user.groups.filter(name="moderator").exists()
 
 
-
 from rest_framework import permissions
+
 
 class IsOwner(permissions.BasePermission):
     """Проверка, что пользователь является владельцем объекта"""
