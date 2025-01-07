@@ -1,7 +1,10 @@
+from datetime import timedelta
+
+from django.utils.timezone import now
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.generics import (
     CreateAPIView,
     DestroyAPIView,
@@ -18,6 +21,7 @@ from materials.models import Course, Lesson, Subscription
 from materials.paginations import CustomPagination
 
 from materials.serializers import CourseSerializer, LessonSerializer
+from materials.tasks import subscription_message
 from users.permissions import IsModer, IsOwner
 
 
@@ -55,6 +59,13 @@ class CourseViewSet(ModelViewSet):
         elif self.action == "destroy":
             self.permission_classes.extend([~IsModer, IsOwner])
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        update_course = serializer.save()
+        subscriptions = Subscription.objects.filter(course=update_course)
+        for subscription in subscriptions:
+            subscription_message.delay(update_course.title, subscription.owner.email)
+        update_course.save()
 
 
 class LessonListAPIView(ListAPIView):
