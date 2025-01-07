@@ -22,7 +22,6 @@ def create_stripe_price(amount, product):
         currency="rub",
         unit_amount=int(amount * 100),
         product_data={"name": "Payment"},
-
     )
 
 

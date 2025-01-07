@@ -30,6 +30,7 @@ class CourseSerializer(serializers.ModelSerializer):
         user = self.context.get("request").user
         return Subscription.objects.filter(owner=user, course=obj).exists()
 
+
     class Meta:
         model = Course
         fields = (
